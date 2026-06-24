@@ -104,6 +104,15 @@ def edit_record():
     else:
         print("编号不存在:")
 
+def sort_records():
+    if len(records)==0:
+        print("暂无记录")
+        return
+    df=pd.DataFrame(records)
+    sorted_df=df.sort_values(by="金额",ascending=False).reset_index(drop=True)
+    print(sorted_df[["日期", "金额", "类型", "备注"]])
+    
+
 load_data()
 
 while True:
