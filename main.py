@@ -8,7 +8,10 @@ def add_records():
     except ValueError:
         print("请输入数字")
         return
-    type_=input("输入类型:")
+    type_=input("输入类型(收入/支出):")
+    if type_ not in ["收入","支出"]:
+        print("输入类型(收入/支出):")
+        return
     note=input("备注:")
     record={
         "日期":date,
@@ -19,13 +22,16 @@ def add_records():
     records.append(record)
 
 def show_records():
+    if len(records)==0:
+        print("暂无记录")
+        return
     for i,record in enumerate(records,start=1):
         print("--------------")
         print("编号:",i)
         print("日期:", record["日期"])
         print("类型:", record["类型"])
         print("金额:", record["金额"])
-        print("备注:", record["备注"])
+        print("备注:", record["备注"])    
 
 
 def save_data():
@@ -48,7 +54,7 @@ def load_data():
         df=pd.read_csv("money.csv")
         records=df.to_dict("records")
         print("加载成功")
-    except:
+    except ValueError:
         records = []
         print("没有找到历史记录")
 
@@ -56,11 +62,12 @@ def delete_record():
     show_records()
     try: 
         delete_num=int(input("输入删除的编号:"))
-    except:
+    except ValueError:
         print("输入数字")
         return
     if 1 <= delete_num <=len(records):
         records.pop(delete_num-1)
+        save_data()
         print("删除成功")
     else:
         print("编号不存在:") 
@@ -82,13 +89,13 @@ def edit_record():
     show_records()
     try:
         edit_num=int(input("输入修改编号:"))
-    except:
+    except ValueError:
         print("输入数字")
         return
     if 1<=edit_num<=len(records):
         try:
             new_amount=int(input("输入新金额:"))
-        except:
+        except ValueError:
             print("输入数字")
             return
         records[edit_num-1]["金额"]=new_amount
