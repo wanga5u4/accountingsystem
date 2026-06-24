@@ -1,0 +1,131 @@
+import pandas as pd
+records=[]
+
+def add_records():
+    date=input("输入日期:")
+    try:
+        amount=int(input("输入金额:"))
+    except ValueError:
+        print("请输入数字")
+        return
+    type_=input("输入类型:")
+    note=input("备注:")
+    record={
+        "日期":date,
+        "金额":amount,
+        "类型":type_,
+        "备注":note
+        }
+    records.append(record)
+
+def show_records():
+    for i,record in enumerate(records,start=1):
+        print("--------------")
+        print("编号:",i)
+        print("日期:", record["日期"])
+        print("类型:", record["类型"])
+        print("金额:", record["金额"])
+        print("备注:", record["备注"])
+
+
+def save_data():
+    df=pd.DataFrame(records)
+    df.to_csv("money.csv",index=False)
+
+def statistics():
+    if len(records)==0:
+        print("暂无记录")
+        return
+    df=pd.DataFrame(records)
+    income=df[df["类型"]=="收入"]["金额"].sum()
+    expense=df[df["类型"]=="支出"]["金额"].sum()
+    print("总收入:",income)
+    print("总支出:",expense)
+
+def load_data():
+    global records
+    try:
+        df=pd.read_csv("money.csv")
+        records=df.to_dict("records")
+        print("加载成功")
+    except:
+        records = []
+        print("没有找到历史记录")
+
+def delete_record():
+    show_records()
+    try: 
+        delete_num=int(input("输入删除的编号:"))
+    except:
+        print("输入数字")
+        return
+    if 1 <= delete_num <=len(records):
+        records.pop(delete_num-1)
+        print("删除成功")
+    else:
+        print("编号不存在:") 
+
+def search_record():
+    keyword=input("输入查询内容:")
+    for record in records:
+        if (keyword in str((record["日期"]))
+            or keyword in record["类型"]
+            or keyword in str(record["备注"])
+            or keyword in str(record["金额"])
+        ):
+            print("日期:", record["日期"])
+            print("类型:", record["类型"])
+            print("金额:", record["金额"])
+            print("备注:", record["备注"])
+
+def edit_record():
+    show_records()
+    try:
+        edit_num=int(input("输入修改编号:"))
+    except:
+        print("输入数字")
+        return
+    if 1<=edit_num<=len(records):
+        try:
+            new_amount=int(input("输入新金额:"))
+        except:
+            print("输入数字")
+            return
+        records[edit_num-1]["金额"]=new_amount
+        save_data()
+        print("修改成功")
+    else:
+        print("编号不存在:")
+
+load_data()
+
+while True:
+    print("\n===== 记账系统 =====")
+    print("1. 添加记录")
+    print("2. 查看记录")
+    print("3. 统计收支")
+    print("4. 删除记录")
+    print("5. 查询记录")
+    print("6. 修改记录")
+    print("7. 退出")
+     
+    choice=input("请选择:")
+    if choice=="1":
+        add_records()
+    elif choice=="2":
+        show_records()
+    elif choice=="3":
+        statistics()
+    elif choice=="4":
+        delete_record()
+    elif choice=="5":
+        search_record()
+    elif choice=="6":
+        edit_record()
+    elif choice == "7":
+        print("感谢使用记账系统")
+        save_data()
+        break
+    else:
+        print("输入错误，请重新输入")
+
