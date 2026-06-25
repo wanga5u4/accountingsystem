@@ -1,3 +1,17 @@
 <h1>展示数据</h1>
 
+<table>
+    <tr>
+        <th>金额</th>
+        <th>备注</th>
+    </tr>
+{% for record in records %}
+    <tr>
+        <td>{{record["金额"]}}</td>
+        <td>{{record["备注"]}}</td>
+    </tr>
+{% endfor %}
+</table>
+
+
 <a href="/">返回首页</a>
