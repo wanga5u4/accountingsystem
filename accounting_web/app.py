@@ -33,13 +33,15 @@ def add():
         return render_template("add.html")
     else:
         money=int(request.form["money"])
+        type_=request.form["type_"]
         note=request.form["note"]
         records.append({
             "金额":money,
+            "类型":type_,
             "备注":note
             })
         save_data()
-        return render_template("add.html")
+        return redirect("/add")
     
 
 @app.route("/show")
@@ -76,12 +78,16 @@ def edit(index):
         "edit.html",
         record=record,
         index=index)
+        
     else:
         money=int(request.form["money"])
         note=request.form["note"]
+        type_=request.form["type_"]
         records[index]={
             "金额":money,
-            "备注":note}
+            "备注":note,
+            "类型":type_
+            }
         save_data()
         return redirect("/show")
 

@@ -1,7 +1,7 @@
 <h1>展示数据</h1>
 
 <form action="/show" method="get">
-    <input type="text" name="keyword">
+    <input type="text" name="keyword" placeholder="请输入备注">
     <button>搜索</button>
 </form>
 
@@ -9,12 +9,14 @@
     <tr>
         <th>金额</th>
         <th>备注</th>
+        <th>类型</th>
         <th>操作</th>
     </tr>
 {% for record in records %}
     <tr>
         <td>{{record["金额"]}}</td>
         <td>{{record["备注"]}}</td>
+        <td>{{record["类型"]}}</td>
         <td>
         <a href="/delete/{{ loop.index0 }}" 
             onclick="return confirm('确定删除吗？')">

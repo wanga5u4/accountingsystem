@@ -1,14 +1,21 @@
 <h1>更改数据</h1>
 
 <form action="/edit/{{ index }}" method="post">
-<p><input type="text"
+<p>金额:<input type="text"
     name="money"
     value="{{ record['金额']}}">
 </p>
 
-<p><input type="text"
+<p>备注:<input type="text"
     name="note"
     value="{{ record['备注'] }}">
 </p>
+
+<p>类型:<select name="type_">
+    <option>收入</option>
+    <option>支出</option>
+    </select>
+</p>
+
 <p><button>确定</button></p>
 </form>
