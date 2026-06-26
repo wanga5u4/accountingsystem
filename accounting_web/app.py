@@ -42,7 +42,7 @@ def add():
             })
         save_data()
         return redirect("/add")
-    
+
 
 @app.route("/show")
 def show():
@@ -62,7 +62,19 @@ def show():
 
 @app.route("/sort")
 def sort():
-    return render_template("sort.html")
+    total_income=0
+    total_expense=0
+    for record in records:
+        if record["类型"] == "收入":
+            total_income += record["金额"]
+        elif record["类型"] == "支出":
+            total_expense += record["金额"]
+    balance = total_income - total_expense    
+    return render_template(
+        "sort.html",
+        total_income=total_income,
+        total_expense=total_expense,
+        balance=balance)
 
 @app.route("/delete/<int:index>")
 def delete(index):
