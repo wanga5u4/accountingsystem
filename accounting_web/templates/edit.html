@@ -1,0 +1,14 @@
+<h1>更改数据</h1>
+
+<form action="/edit/{{ index }}" method="post">
+<p><input type="text"
+    name="money"
+    value="{{ record['金额']}}">
+</p>
+
+<p><input type="text"
+    name="note"
+    value="{{ record['备注'] }}">
+</p>
+<p><button>确定</button></p>
+</form>

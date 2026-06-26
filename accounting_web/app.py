@@ -1,4 +1,4 @@
-from flask import Flask,render_template,request
+from flask import Flask,render_template,request,redirect,url_for
 import pandas as pd
 app=Flask(__name__)
 records=[]
@@ -50,6 +50,29 @@ def show():
 @app.route("/sort")
 def sort():
     return render_template("sort.html")
-  
+
+@app.route("/delete/<int:index>")
+def delete(index):
+    records.pop(index)
+    save_data()
+    return redirect("/show")
+
+@app.route("/edit/<int:index>",methods=["GET","POST"])
+def edit(index):
+    if request.method=="GET":
+        record=records[index]
+        return render_template(
+        "edit.html",
+        record=record,
+        index=index)
+    else:
+        money=int(request.form["money"])
+        note=request.form["note"]
+        records[index]={
+            "金额":money,
+            "备注":note}
+        save_data()
+        return redirect("/show")
+
 
 app.run(debug=True)
