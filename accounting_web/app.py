@@ -40,12 +40,23 @@ def add():
             })
         save_data()
         return render_template("add.html")
+    
 
 @app.route("/show")
 def show():
-    return render_template(
-    "show.html",
-    records=records)
+    search_result=[]
+    keyword = request.args.get("keyword")
+    if not keyword:
+        return render_template(
+        "show.html",
+        records=records)
+    else:
+        for record in records:
+            if keyword in record["备注"]:
+               search_result.append(record)
+        return render_template(
+            "show.html",
+            records=search_result) 
 
 @app.route("/sort")
 def sort():
