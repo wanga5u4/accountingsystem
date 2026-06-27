@@ -41,7 +41,7 @@ def add():
             "备注":note
             })
         save_data()
-        return redirect("/add")
+        return redirect(url_for("add"))
 
 
 @app.route("/show")
@@ -101,7 +101,7 @@ def edit(index):
             "类型":type_
             }
         save_data()
-        return redirect("/show")
+        return redirect(url_for("show"))
 
 
 app.run(debug=True)

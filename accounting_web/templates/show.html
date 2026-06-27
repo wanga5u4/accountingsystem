@@ -18,11 +18,11 @@
         <td>{{record["备注"]}}</td>
         <td>{{record["类型"]}}</td>
         <td>
-        <a href="/delete/{{ loop.index0 }}" 
+        <a href="{{ url_for('delete', index=loop.index0) }}" 
             onclick="return confirm('确定删除吗？')">
             删除
         </a>
-        <a href="/edit/{{ loop.index0 }}">
+        <a href="{{ url_for('edit', index=loop.index0) }}">
             修改
         </a>
         </td>
